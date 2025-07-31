@@ -16,12 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('clas_id');
             $table->string('photo');
             $table->string('name');
-            $table->string('nisn'); // lebih aman daripada bigInteger
+            $table->string('nisn');
             $table->text('alamat');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email');
             $table->string('password');
-            $table->string('no_telepon');
+            $table->string('no_handphone');
             $table->rememberToken();
             $table->timestamps();
         });
