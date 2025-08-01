@@ -9,7 +9,9 @@
 </head>
 
 <body>
-    <a href="siswa.create"><button>Tambah</button></a>
+<a href="/siswa/create"><button>Tambah</button></a>
+    <br>
+    <br>
     <table border="1">
         <thead>
             <tr>
