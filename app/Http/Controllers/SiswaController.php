@@ -1,92 +1,53 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use App\Models\Siswa;
+
 use Illuminate\Http\Request;
+use App\Models\user;
+use Illuminate\Validation\Rules\Unique;
 
 class SiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index()
     {
-        //
+        return view('siswa.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('siswa.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
     public function store(Request $request)
     {
         //validate
-        request()->validate([
+        $request->validate([
             'kelas' => 'required',
-            'nama' => 'required',
-            'nisn' => 'required',
+            'name' => 'required',
+            'nisn' => 'required|unique:users,nisn',
             'alamat' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users,email',
             'password' => 'required',
-            'no_handphone' => 'required'
+            'no_handphone' => 'required',
         ]);
-        //store
+
         $datauser = [
             'clas_id' => $request->kelas,
-            'name' => $request->nama,
+            'photo' => 'photo.jpg',
+            'name' => $request->name,
             'nisn' => $request->nisn,
             'alamat' => $request->alamat,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'no_telepon' => $request->no_handphone,
-            'photo' => 'bebas.png',
         ];
 
-        //simpen ke database
-        User::create($datauser);
+        user::create($datauser);
 
         return redirect('/');
-
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
