@@ -34,13 +34,13 @@ class SiswaController extends Controller
 
         //validate
         $request->validate([
-            'kelas' => 'required|unique:users,clas_id',
+            'kelas' => 'required',
             'name' => 'required',
             'nisn' => 'required|unique:users,nisn',
             'alamat' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'no_handphone' => 'required',
+            'no_handphone' => 'required|unique:users,no_handphone',
         ]);
 
         $datauser = [
