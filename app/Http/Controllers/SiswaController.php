@@ -13,7 +13,10 @@ class SiswaController extends Controller
 
     public function index()
     {
-        return view('siswa.index');
+        //siapkan data siswa
+        $siswas = user::all();
+
+        return view('siswa.index', compact('siswas'));
     }
 
     public function create()
@@ -41,6 +44,7 @@ class SiswaController extends Controller
             'email' => 'required|unique:users,email',
             'password' => 'required',
             'no_handphone' => 'required|unique:users,no_handphone',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $datauser = [
@@ -53,8 +57,9 @@ class SiswaController extends Controller
             'password' => bcrypt($request->password),
             'no_handphone' => $request->no_handphone,
         ];
-
-        $datauser ['photo'] = $request->file('photo')->store('images', 'public');
+        if ($request->hasFile('photo')) {
+            $datauser['photo'] = $request->file('photo')->store('images', 'public');
+        }
 
         user::create($datauser);
 

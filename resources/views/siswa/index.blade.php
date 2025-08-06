@@ -12,10 +12,10 @@
 <a href="/siswa/create"><button>Tambah</button></a>
     <br>
     <br>
-    <table border="1">
-        <thead>
+    <table border="1" style="width: 100%" cellspacing="0" cellpadding="20">
+        <thead style="font-size: l;">
             <tr>
-                <td>Foto</td>
+                <td>Photo</td>
                 <td>Name</td>
                 <td>Kelas</td>
                 <td>Alamat</td>
@@ -23,11 +23,17 @@
             </tr>
         </thead>
         <tbody border="1">
+            @foreach ($siswas as $siswa)
             <tr>
-                <td>foto.jpg</td>
-                <td>gusmifth</td>
-                <td>12</td>
-                <td>pekalongan</td>
+                <td>@if ($siswa->photo)
+                    <img src="{{asset('storage/'.$siswa->photo)}}"alt="" width="100">
+                @else
+                gada profilnya
+                @endif
+</td>
+                <td>{{$siswa->name}}</td>
+                <td>{{ $siswa->clas->name}}</td>
+                <td>{{$siswa->alamat}}</td>
                 <td> <a href="">detail</a>
                     |
                     <a href="">hapus</a>
@@ -35,6 +41,7 @@
                     <a href="">edit</a>
                 </td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 
