@@ -98,7 +98,7 @@
         <br>
 
     </form>
-    <a href="/"><button>Ngga Jdi</button></a>
+    <a href="/"><button>Kembali</button></a>
 </body>
 
 </html>

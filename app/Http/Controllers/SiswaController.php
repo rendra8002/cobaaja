@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\clas;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Unique;
 
 class SiswaController extends Controller
@@ -62,6 +63,24 @@ class SiswaController extends Controller
         }
 
         user::create($datauser);
+
+        return redirect('/');
+    }
+
+    //funsi delete
+    public function destroy($id)
+    {
+        $siswa = User::findOrFail($id);
+
+        // Cek apakah ada file photo yang tersimpan
+        if (
+            $siswa->photo &&
+            Storage::exists($siswa->photo)
+        ) {
+            Storage::delete($siswa->photo);
+        }
+        Storage::disk('public')->delete($siswa->photo);
+        $siswa->delete();
 
         return redirect('/');
     }

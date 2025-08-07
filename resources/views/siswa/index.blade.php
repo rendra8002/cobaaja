@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<a href="/siswa/create"><button>Tambah</button></a>
+    <a href="/siswa/create"><button>Tambah</button></a>
     <br>
     <br>
     <table border="1" style="width: 100%" cellspacing="0" cellpadding="20">
@@ -26,17 +26,18 @@
             @foreach ($siswas as $siswa)
             <tr>
                 <td>@if ($siswa->photo)
-                    <img src="{{asset('storage/'.$siswa->photo)}}"alt="" width="100">
-                @else
-                gada profilnya
-                @endif
-</td>
+                    <img src="{{asset('storage/'.$siswa->photo)}}" alt="" width="100" border-radius="50%">
+                    @else
+                    gada profilnya
+                    @endif
+                </td>
                 <td>{{$siswa->name}}</td>
                 <td>{{ $siswa->clas->name}}</td>
                 <td>{{$siswa->alamat}}</td>
                 <td> <a href="">detail</a>
                     |
-                    <a href="">hapus</a>
+                    <a href="siswa/delete/{{$siswa->id}}"
+                  onclick="return confirm ('apakah yakin?')">hapus</a>
                     |
                     <a href="">edit</a>
                 </td>
