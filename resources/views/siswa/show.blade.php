@@ -21,6 +21,7 @@
 
         .container {
             max-width: 400px;
+            width: 90%;
             margin: 0 auto;
             background-color: white;
             padding: 25px;
@@ -37,10 +38,22 @@
             margin-bottom: 20px;
         }
 
+        .no-photo {
+            width: 120px;
+            height: 120px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ccc;
+            color: #666;
+            font-size: 12px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
         .info {
             font-size: 16px;
             margin: 8px 0;
-            font-weight: normal;
         }
 
         .btn-back {
@@ -68,7 +81,7 @@
         @if ($datauser->photo)
         <img src="{{ asset('storage/'.$datauser->photo) }}" alt="Foto Siswa">
         @else
-        <span>Gak ada foto</span>
+        <div class="no-photo">Tidak ada foto</div>
         @endif
 
         <div class="info"><strong>Nama:</strong> {{ $datauser->name }}</div>
