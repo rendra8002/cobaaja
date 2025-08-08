@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\clas;
 use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Unique;
+use Termwind\Components\Dd;
 
 class SiswaController extends Controller
 {
@@ -77,11 +79,21 @@ class SiswaController extends Controller
             $siswa->photo &&
             Storage::exists($siswa->photo)
         ) {
-            Storage::delete($siswa->photo);
+            Storage::disk('public')->delete($siswa->photo);
         }
-        Storage::disk('public')->delete($siswa->photo);
         $siswa->delete();
 
         return redirect('/');
     }
+
+public function show($id)  
+{
+    $datauser = User::find($id);
+
+    if ($datauser != null) {
+        return view('siswa.show', compact('datauser'));
+    } else {
+        return redirect('/');
+    }
+}
 }
