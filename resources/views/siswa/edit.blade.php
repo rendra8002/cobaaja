@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,7 +85,7 @@
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid #00bcd4;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 600px) {
@@ -103,6 +104,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <h1>Edit Data Siswa</h1>
@@ -113,11 +115,11 @@
 
         <label for="kelas">Kelas:</label>
         <select name="kelas" id="kelas" required>
-            <option value="">-- Pilih Kelas --</option>
+
             @foreach ($clases as $kelas)
-                <option value="{{ $kelas->id }}" {{ $datauser->clas_id == $kelas->id ? 'selected' : '' }}>
-                    {{ $kelas->name }}
-                </option>
+            <option value="{{ $kelas->id }}" {{ $datauser->clas_id == $kelas->id ? 'selected' : '' }}>
+                {{ $kelas->name }}
+            </option>
             @endforeach
         </select>
 
@@ -140,13 +142,16 @@
         <input type="file" name="photo" id="photo" accept="image/*">
 
         @if ($datauser->photo)
-            <div class="photo-preview">
-                <img src="{{ asset('storage/' . $datauser->photo) }}" alt="Foto Siswa">
-            </div>
+        <div class="photo-preview">
+            <img src="{{ asset('storage/' . $datauser->photo) }}" alt="Foto Siswa">
+        </div>
         @endif
-
-        <button type="submit" onclick="return confirm('Apakah yakin ingin mengubah?')">Simpan Perubahan</button>
+        
+            <button type="submit" onclick="return confirm('Apakah yakin ingin mengubah?')">Simpan Perubahan</button>
+            <br>
+        <button><a href="/siswa/index"></a>Kembali</button>
     </form>
 
 </body>
+
 </html>

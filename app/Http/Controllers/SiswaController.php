@@ -57,7 +57,7 @@ class SiswaController extends Controller
             'nisn' => $request->nisn,
             'alamat' => $request->alamat,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => $request->password,
             'no_handphone' => $request->no_handphone,
         ];
         if ($request->hasFile('photo')) {
@@ -98,47 +98,68 @@ class SiswaController extends Controller
     }
 
     public function edit($id)
-{
-    $datauser = User::findOrFail($id);
-    $clases = Clas::all(); // agar bisa pilih ulang kelas
-    return view('siswa.edit', compact('datauser', 'clases')); // ✅ BENAR
+    {
+        // Cek apakah datauser dengan ID tersebut ada
+   $datauser = User::find($id);
 
-}
+    // Jika data tidak ditemukan
+    if (!$datauser) {
 
-public function update(Request $request, $id)
-{
-    $datauser = User::findOrFail($id);
+        // Ambil ID terakhir yang valid dari session (terakhir kali digunakan)
+        $lastId = session('data yang terakhir diedit');
 
-    $request->validate([
-        'kelas' => 'required',
-        'name' => 'required',
-        'nisn' => 'required|unique:users,nisn,' . $id,
-        'alamat' => 'required',
-        'email' => 'required|unique:users,email,' . $id,
-        'no_handphone' => 'required|unique:users,no_handphone,' . $id,
-        'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
-
-    $data = [
-        'clas_id' => $request->kelas,
-        'name' => $request->name,
-        'nisn' => $request->nisn,
-        'alamat' => $request->alamat,
-        'email' => $request->email,
-        'no_handphone' => $request->no_handphone,
-    ];
-
-    if ($request->hasFile('photo')) {
-        // hapus foto lama kalau ada
-        if ($datauser->photo && Storage::disk('public')->exists($datauser->photo)) {
-            Storage::disk('public')->delete($datauser->photo);
+        //id tidak ditemukan, coba ambil ID terakhir yang diedit
+        if ($lastId && User::find($lastId)) {
+            return redirect('/siswa/' . $lastId . '/edit');
+        } else {
+          
         }
-        $data['photo'] = $request->file('photo')->store('images', 'public');
     }
 
-    $datauser->update($data);
+    // Simpan ID ini sebagai ID terakhir yang valid
+    session(['data yang terakhir diedit' => $id]);
 
-    return redirect('/')->with('success', 'Data berhasil diperbarui');
-}
+        $clases = Clas::all();
+        return view('siswa.edit', compact('datauser', 'clases'));
+    }
 
+
+
+
+    public function update(Request $request, $id)
+    {
+        //data dari user
+        $datauser = User::findOrFail($id);
+
+        $request->validate([
+            'kelas' => 'required',
+            'name' => 'required',
+            'nisn' => 'required|unique:users,nisn,' . $id,
+            'alamat' => 'required',
+            'email' => 'required|unique:users,email,' . $id,
+            'no_handphone' => 'required|unique:users,no_handphone,' . $id,
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $data = [
+            'clas_id' => $request->kelas,
+            'name' => $request->name,
+            'nisn' => $request->nisn,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'no_handphone' => $request->no_handphone,
+        ];
+
+        if ($request->hasFile('photo')) {
+            // hapus foto lama kalau ada
+            if ($datauser->photo && Storage::disk('public')->exists($datauser->photo)) {
+                Storage::disk('public')->delete($datauser->photo);
+            }
+            $data['photo'] = $request->file('photo')->store('images', 'public');
+        }
+
+        $datauser->update($data);
+
+        return redirect('/');
+    }
 }

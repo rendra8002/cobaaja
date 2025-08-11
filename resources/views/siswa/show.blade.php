@@ -89,6 +89,7 @@
         <div class="info"><strong>Alamat:</strong> {{ $datauser->alamat }}</div>
         <div class="info"><strong>Email:</strong> {{ $datauser->email }}</div>
         <div class="info"><strong>No HP:</strong> {{ $datauser->no_handphone }}</div>
+        <div class="info"><strong>No HP:</strong> {{ $datauser->password }}</div>
 
         <a href="/"><button class="btn-back">Kembali</button></a>
     </div>
