@@ -88,39 +88,48 @@ class SiswaController extends Controller
 
     public function show($id)
     {
+        // Cek apakah datauser dengan ID tersebut ada
         $datauser = User::find($id);
 
+        // Jika data tidak ditemukan,ambil id teerakhir yang dilihat(buat session)
         if ($datauser != null) {
+            session(['data_yang_dilihat' => $id]);
             return view('siswa.show', compact('datauser'));
-        } else {
-            return redirect('/');
+        }
+
+        //panggil last id yang tadi dibuat pada session
+        $lastId = session('data_yang_dilihat');
+        if ($lastId && User::find($lastId)) {
+            return redirect('/siswa/show/' . $lastId);
         }
     }
 
     public function edit($id)
     {
         // Cek apakah datauser dengan ID tersebut ada
-   $datauser = User::find($id);
+        $datauser = User::find($id);
 
-    // Jika data tidak ditemukan
-    if (!$datauser) {
+        // Jika data tidak ditemukan
+        if ($datauser != null) {
+            // Simpan ID ini sebagai ID terakhir yang valid (session untuk mengingat ID terakhir yang diedit)
+            session(['data yg trakhir diedit' => $id]);
 
-        // Ambil ID terakhir yang valid dari session (terakhir kali digunakan)
-        $lastId = session('data yang terakhir diedit');
+            // Ambil data Clas
+            $clases = Clas::all();
 
-        //id tidak ditemukan, coba ambil ID terakhir yang diedit
-        if ($lastId && User::find($lastId)) {
-            return redirect('/siswa/' . $lastId . '/edit');
-        } else {
-          
+            return view('/siswa.edit', compact('datauser', 'clases'));
         }
-    }
 
-    // Simpan ID ini sebagai ID terakhir yang valid
-    session(['data yang terakhir diedit' => $id]);
+        // Jika data (id) tidak ditemukan, coba ambil ID terakhir yang valid (jika ada $lastId maka harus juga ada session)
+        $lastId = session('data yg trakhir diedit');
 
-        $clases = Clas::all();
-        return view('siswa.edit', compact('datauser', 'clases'));
+        //jika lastid dan data user keduanya terpenuhi (keduanya ada)
+        if ($lastId && User::find($lastId)) {
+
+            return redirect('/siswa/' . $lastId . '/edit');
+        }
+
+        return redirect('/'); 
     }
 
 
