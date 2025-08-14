@@ -32,29 +32,29 @@ class ClasController extends Controller
             ->with('success', 'Kelas berhasil ditambahkan.');
     }
 
-public function edit($id)
-{
-    // Ambil data berdasarkan ID yang ada di URL
-    $clas = Clas::find($id);
+    public function edit($id)
+    {
+        // Ambil data berdasarkan ID yang ada di URL
+        $clas = Clas::find($id);
 
-    if ($clas) {
-        // Simpan ID terakhir yang valid di session
-        session(['data yg trakhir diedit' => $id]);
+        if ($clas) {
+            // Simpan ID terakhir yang valid di session
+            session(['data yg trakhir diedit' => $id]);
 
-        return view('clas.edit', compact('clas'));
+            return view('clas.edit', compact('clas'));
+        }
+
+        // Ambil ID terakhir yang valid dari session
+        $lastId = session('data yg trakhir diedit');
+
+        // Jika lastId ada dan datanya masih ada di database
+        if ($lastId && Clas::find($lastId)) {
+            return redirect("/clas/{$lastId}/edit");
+        }
+
+        // Kalau tidak ada data sama sekali, kembali ke halaman index
+        return redirect('/clas');
     }
-
-    // Ambil ID terakhir yang valid dari session
-    $lastId = session('data yg trakhir diedit');
-
-    // Jika lastId ada dan datanya masih ada di database
-    if ($lastId && Clas::find($lastId)) {
-        return redirect("/clas/{$lastId}/edit");
-    }
-
-    // Kalau tidak ada data sama sekali, kembali ke halaman index
-    return redirect('/clas');
-}
 
 
     public function update(Request $request, $id)
@@ -91,10 +91,10 @@ public function edit($id)
         session(['data_yang_dilihat' => $id]);
 
         // Ambil data siswa yang punya clas_id sama
-        $students = User::where('clas_id', $id)->get();
+        $datauser = User::where('clas_id', $id)->get();
 
         // Kirim data ke view
-        return view('clas.show', compact('clas', 'students'));
+        return view('clas.show', compact('clas', 'datauser'));
     }
 
 

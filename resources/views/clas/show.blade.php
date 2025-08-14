@@ -67,17 +67,17 @@
 
         <hr>
         <h3>Daftar Siswa</h3>
-        @if($students->isEmpty())
+        @if($datauser->isEmpty())
             <p><i>Tidak ada siswa di kelas ini.</i></p>
         @else
             <ul>
-                @foreach($students as $student)
-                    <li>{{ $student->name }} (NISN: {{ $student->nisn }})</li>
+                @foreach($datauser as $user)
+                    <li>{{ $user->name }} Kelas: {{ $clas->name }}</li>
                 @endforeach
             </ul>
         @endif
 
-        <a href="{{ route('clas.index') }}"><button class="btn-back">Kembali</button></a>
+        <a href="/clas"><button class="btn-back">Kembali</button></a>
     </div>
 
 </body>

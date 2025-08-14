@@ -122,7 +122,7 @@
 
         <div class="form-footer">
             <button type="submit" class="btn-submit">Simpan</button>
-            <a href="{{ route('clas.index') }}"><button type="button" class="btn-back">Kembali</button></a>
+            <a href="/clas"><button type="button" class="btn-back">Kembali</button></a>
         </div>
     </form>
 </body>
