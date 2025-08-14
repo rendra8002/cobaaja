@@ -121,7 +121,7 @@
         @enderror
 
         <div class="form-footer">
-            <button type="submit" class="btn-submit">Simpan</button>
+            <button type="submit" class="btn-submit">Tambah Kelas</button>
             <a href="/clas"><button type="button" class="btn-back">Kembali</button></a>
         </div>
     </form>

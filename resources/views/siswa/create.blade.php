@@ -156,7 +156,7 @@ small {
         <input type="file" name="photo">
 
         <div class="form-footer">
-            <button type="submit" class="btn-submit">Simpan</button>
+            <button type="submit" class="btn-submit">Tambah Data Siswa</button>
             <a href="/"><button type="button" class="btn-back">Kembali</button></a>
         </div>
     </form>
