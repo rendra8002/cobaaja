@@ -39,6 +39,7 @@
         input[type="text"],
         input[type="email"],
         input[type="file"],
+        input[type="password"],
         select {
             width: 100%;
             padding: 10px 12px;
@@ -87,21 +88,6 @@
             border: 3px solid #00bcd4;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-
-        @media (max-width: 600px) {
-            form {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.6em;
-            }
-
-            .photo-preview img {
-                width: 100px;
-                height: 100px;
-            }
-        }
     </style>
 </head>
 
@@ -115,7 +101,6 @@
 
         <label for="kelas">Kelas:</label>
         <select name="kelas" id="kelas" required>
-
             @foreach ($clases as $kelas)
             <option value="{{ $kelas->id }}" {{ $datauser->clas_id == $kelas->id ? 'selected' : '' }}>
                 {{ $kelas->name }}
@@ -135,6 +120,10 @@
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" value="{{ $datauser->email }}" required>
 
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Opsional" autocomplete="new-password">
+        <small>Kosongkan jika tidak ingin mengubah password</small>
+
         <label for="no_handphone">No. HP:</label>
         <input type="text" name="no_handphone" id="no_handphone" value="{{ $datauser->no_handphone }}" required>
 
@@ -146,10 +135,11 @@
             <img src="{{ asset('storage/' . $datauser->photo) }}" alt="Foto Siswa">
         </div>
         @endif
-        
-            <button type="submit" onclick="return confirm('Apakah yakin ingin mengubah?')">Simpan Perubahan</button>
-            <br>
-        <button><a href="/siswa/index"></a>Kembali</button>
+
+        <button type="submit" onclick="return confirm('Apakah yakin ingin mengubah?')">Simpan Perubahan</button>
+        <br>
+
+        <a href="/"><button type="button">Kembali</button> </a>
     </form>
 
 </body>

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\clas;
 use App\Models\user;
+use Termwind\Components\Dd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Unique;
-use Termwind\Components\Dd;
 
 class SiswaController extends Controller
 {
@@ -34,37 +35,32 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
-        //siapkan data 
-        clas::all();
-        //alihkan ke halaman create 
-
-        //validate
         $request->validate([
             'kelas' => 'required',
             'name' => 'required',
             'nisn' => 'required|unique:users,nisn',
             'alamat' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required',
+            'password' => 'required', // tanpa min length
             'no_handphone' => 'required|unique:users,no_handphone',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $datauser = [
             'clas_id' => $request->kelas,
-
             'name' => $request->name,
             'nisn' => $request->nisn,
             'alamat' => $request->alamat,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'no_handphone' => $request->no_handphone,
         ];
+
         if ($request->hasFile('photo')) {
             $datauser['photo'] = $request->file('photo')->store('images', 'public');
         }
 
-        user::create($datauser);
+        User::create($datauser);
 
         return redirect('/');
     }
@@ -129,7 +125,7 @@ class SiswaController extends Controller
             return redirect('/siswa/' . $lastId . '/edit');
         }
 
-        return redirect('/'); 
+        return redirect('/');
     }
 
 
@@ -137,9 +133,15 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
-        //data dari user
-        $datauser = User::findOrFail($id);
+        // Cari data
+        $datauser = User::find($id);
 
+        // Kalau data tidak ditemukan
+        if ($datauser == null) {
+            return redirect('/');
+        }
+
+        // Validasi input
         $request->validate([
             'kelas' => 'required',
             'name' => 'required',
@@ -150,6 +152,7 @@ class SiswaController extends Controller
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+        // Siapkan data
         $data = [
             'clas_id' => $request->kelas,
             'name' => $request->name,
@@ -159,14 +162,22 @@ class SiswaController extends Controller
             'no_handphone' => $request->no_handphone,
         ];
 
+        if ($request->filled('password')) {
+            $datauser->password = bcrypt($request->password);
+        }
+
+
+
+        // Kalau upload foto baru
         if ($request->hasFile('photo')) {
-            // hapus foto lama kalau ada
+            // Hapus foto lama
             if ($datauser->photo && Storage::disk('public')->exists($datauser->photo)) {
                 Storage::disk('public')->delete($datauser->photo);
             }
             $data['photo'] = $request->file('photo')->store('images', 'public');
         }
 
+        // Update data
         $datauser->update($data);
 
         return redirect('/');
