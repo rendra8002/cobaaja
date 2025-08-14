@@ -138,8 +138,7 @@
 
         <button type="submit" onclick="return confirm('Apakah yakin ingin mengubah?')">Simpan Perubahan</button>
         <br>
-
-        <a href="/"><button type="button">Kembali</button> </a>
+        <button class="btn-back"><a href="/"></a>Kembali</button>
     </form>
 
 </body>

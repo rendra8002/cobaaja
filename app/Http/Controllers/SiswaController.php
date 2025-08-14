@@ -41,9 +41,9 @@ class SiswaController extends Controller
             'nisn' => 'required|unique:users,nisn',
             'alamat' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required', // tanpa min length
+            'password' => 'required',
             'no_handphone' => 'required|unique:users,no_handphone',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png',
         ]);
 
         $datauser = [

@@ -163,7 +163,7 @@
                     @endif
                 </td>
                 <td data-label="Nama">{{ $datauser->name }}</td>
-                <td data-label="Kelas">{{ $datauser->clas->name }}</td>
+                <td data-label="Kelas">{{ optional ($datauser->clas)->name }}</td>
                 <td data-label="Alamat">{{ $datauser->alamat }}</td>
                 <td class="action" data-label="Opsi">
                     <a href="/siswa/show/{{ $datauser->id }}">Detail</a> |
