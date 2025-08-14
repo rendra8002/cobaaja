@@ -137,11 +137,11 @@
 
 <body>
     <h1>Data Siswa</h1>
-
+    
     <div class="top-bar">
         <a href="/siswa/create" class="btn-tambah">+ Tambah Siswa</a>
     </div>
-
+<a href="/">index siswa</a>
     <table>
         <thead>
             <tr>
