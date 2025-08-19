@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('clas_id');
+            $table->foreign('clas_id')->references('id')->on('clases')->onDelete('cascade');
+
             $table->string('photo')->nullable();
             $table->string('name');
             $table->string('nisn');

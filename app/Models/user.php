@@ -15,6 +15,6 @@ class User extends Model
     //relasi
     public function clas()
     {
-        return $this->belongsTo(clas::class, 'clas_id');
+        return $this->belongsTo(Clas::class, 'clas_id');
     }
 }

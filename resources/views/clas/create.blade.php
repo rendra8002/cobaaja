@@ -1,130 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD - Create Class</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0f7fa;
-            padding: 30px;
-            color: #004d40;
-        }
+@section('title')
+Tambah Kelas
+@endsection
 
-        h1 {
-            text-align: center;
-            color: #006064;
-            margin-bottom: 20px;
-        }
+@section('css')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e0f7fa;
+        padding: 30px;
+        color: #004d40;
+    }
 
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
+    h1 {
+        text-align: center;
+        color: #006064;
+        margin-bottom: 20px;
+    }
 
-        form:hover {
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-        }
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-            margin-top: 15px;
-        }
+    form:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
 
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #b2ebf2;
-            border-radius: 6px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+        margin-top: 15px;
+    }
 
-        input:focus,
-        textarea:focus {
-            border-color: #00acc1;
-            outline: none;
-        }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #b2ebf2;
+        border-radius: 6px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+    input:focus,
+    textarea:focus {
+        border-color: #00acc1;
+        outline: none;
+    }
 
-        small {
-            color: red;
-            font-size: 13px;
-        }
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
 
-        .btn-submit,
-        .btn-back {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-            transition: background-color 0.3s ease;
-        }
+    small {
+        color: red;
+        font-size: 13px;
+    }
 
-        .btn-submit {
-            background-color: #00bcd4;
-            color: white;
-        }
+    .btn-submit,
+    .btn-back {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s ease;
+    }
 
-        .btn-submit:hover {
-            background-color: #0097a7;
-        }
+    .btn-submit {
+        background-color: #00bcd4;
+        color: white;
+    }
 
-        .btn-back {
-            background-color: #b2ebf2;
-            color: #004d40;
-            margin-left: 10px;
-        }
+    .btn-submit:hover {
+        background-color: #0097a7;
+    }
 
-        .btn-back:hover {
-            background-color: #4dd0e1;
-        }
+    .btn-back {
+        background-color: #b2ebf2;
+        color: #004d40;
+        margin-left: 10px;
+    }
 
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
-</head>
+    .btn-back:hover {
+        background-color: #4dd0e1;
+    }
 
-<body>
-    <h1>Form Tambah Kelas</h1>
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+@endsection
 
-    <form action="{{ route('clas.store') }}" method="post">
-        @csrf
+@section('header')
+Tambah Data Kelas
+@endsection
 
-        <label for="name">Nama Kelas</label>
-        <input type="text" name="name" placeholder="Masukkan Nama Kelas" value="{{ old('name') }}">
-        @error('name')
-            <small>{{ $message }}</small>
-        @enderror
+@section('content')
+<form action="{{ route('clas.store') }}" method="post">
+    @csrf
 
-        <label for="description">Deskripsi</label>
-        <textarea name="description" placeholder="Masukkan Deskripsi Kelas">{{ old('description') }}</textarea>
-        @error('description')
-            <small>{{ $message }}</small>
-        @enderror
+    <label for="name">Nama Kelas</label>
+    <input type="text" name="name" placeholder="Masukkan Nama Kelas" value="{{ old('name') }}">
+    @error('name')
+    <small>{{ $message }}</small>
+    @enderror
 
-        <div class="form-footer">
-            <button type="submit" class="btn-submit">Tambah Kelas</button>
-            <a href="/clas"><button type="button" class="btn-back">Kembali</button></a>
-        </div>
-    </form>
-</body>
+    <label for="description">Deskripsi</label>
+    <textarea name="description" placeholder="Masukkan Deskripsi Kelas">{{ old('description') }}</textarea>
+    @error('description')
+    <small>{{ $message }}</small>
+    @enderror
 
-</html>
+    <div class="form-footer">
+        <button type="submit" class="btn-submit">Tambah Kelas</button>
+        <a href="/clas"><button type="button" class="btn-back">Kembali</button></a>
+    </div>
+</form>
+@endsection
